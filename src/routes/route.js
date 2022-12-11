@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const intro = require('./introduction')
-const employee = require('./employee')
 const _ = require('underscore')
 const mentorModule = require('../abc/xyz/myModule'); 
 const req = require('express/lib/request');
@@ -13,25 +11,66 @@ router.get("/profile-details", function(req, res){
     res.send('dummy response')
 })
 
-router.get('/test-me', function (req, res) {
-    console.log("email from introduction module", intro.myEmail)
-    intro.myFunction('Sabiha')
-    console.log("email from employee module", employee.myEmail)
-
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-    let result = _.first(days, 4)
-    console.log(`Result from underscore function is ${result}`)
-    console.log(`The mentor of the day is ${mentorModule.mentor}`)
-
-    res.send('any dummy text from route handler 1')
-});
 
 
-router.get('/test-me', function(req, res){
-    console.log("I am here")
-    res.send("any dummy text from route handler 2")
+router.get('/marvel', function(req, res){
+    const marvel = ["AVENGER" , "SPIDERMAN" , "SUPERMAN" , "IRONMAN"]
+    res.send(marvel)
+})
+router.get('/movie/:indexNumber', function(req, res){
+    const movie = ["AVENGER" , "SPIDERMAN" , "SUPERMAN" , "IRONMAN"]
+    // console.log(JSON.stringify(req))
+    res.send(movie[req.params.indexNumber])
+})
+router.get('/movies/:indexNumber', function(req, res){
+    const movie = ["AVENGER" , "SPIDERMAN" , "SUPERMAN" , "IRONMAN"]
+    if (req.params.indexNumber > 3) {
+        res.send("ERROR PLEASE SELECT VALID INDEX-NUMBER in the range of 0 to 3")
+    }
+    res.send(movie[req.params.indexNumber])
 })
 
+router.get('/films', function (req, res){
+    let filmDetails = [ {
+        id: 1,
+        name: "The Shining"
+       },
+        {
+        id: 2,
+        name: "Incendies"
+       },
+        {
+        id: 3,
+        name: "“Rang de Basanti”"
+       }, {
+        id: 4,
+        name: "“Finding Nemo”"
+       }]
+    //    console.log(filmDetails)
+    res.send(filmDetails)
+})
+router.get('/films/:filmsID', function (req, res){
+    let films = [ {
+        id: 1,
+        name: "The Shining"
+       },
+        {
+        id: 2,
+        name: "Incendies"
+       },
+        {
+        id: 3,
+        name: "“Rang de Basanti”"
+       }, {
+        id: 4,
+        name: "“Finding Nemo”"
+       }]
+    //    console.log(films[req.params.filmsID].name)
+    if (req.params.filmsID > 3) {
+        res.send("ERROR PLEASE SELECT VALID INDEX-NUMBER type in the range 0 to 3")
+    }
+    res.send(films[req.params.filmsID].name)
+})
 router.get('/students', function (req, res){
     let students = ['Sabiha', 'Neha', 'Akash']
     res.send(students)
